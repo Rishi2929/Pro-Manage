@@ -9,18 +9,24 @@ export const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
 
-    if (!user) return next(new ErrorHandler("Invalid Email or Password", 400));
+    if (!user) return res.status(400).json({
+      success: false,
+      message: "Invalid Email or Password",
+    });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return next(new ErrorHandler("Invalid Email or Password", 400));
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Password",
+      });
 
     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '3h' });
 
     res.setHeader('Authorization', `Bearer ${token}`);
     console.log(User.name)
 
-    res.status(201).json({ message: 'Logged In', token, name: user.name });
+    res.status(201).json({success: true, message: 'Logged In', token, user: user });
   } catch (error) {
     next(error);
   }
@@ -32,7 +38,10 @@ export const Register = async (req, res, next) => {
 
     let user = await User.findOne({ email });
 
-    if (user) return next(new ErrorHandler("User Already Exists", 400));
+    if (user) return res.status(400).json({
+      success: false,
+      message: "User Already Exists",
+    });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -42,7 +51,7 @@ export const Register = async (req, res, next) => {
 
     res.setHeader('Authorization', `Bearer ${token}`);
 
-    res.status(201).json({ message: 'Registered', token, name: user.name });
+    res.status(201).json({success: true, message: 'Registered', token, name: user.name });
 
 
   } catch (error) {

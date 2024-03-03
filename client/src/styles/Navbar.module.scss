@@ -1,0 +1,77 @@
+.navbarContainer {
+    padding: 2rem 0 4rem 0;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    gap: 2rem;
+
+    .bold {
+        background: #528fd44a;
+        color: #000;
+        font-weight: 600;
+    }
+
+    .default {
+        color: #707070;
+        background: #fff;
+    }
+
+    .logoContainer {
+        padding: 0 0 0 3rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.75rem;
+
+        img {}
+
+        div {
+            font-weight: 700;
+        }
+    }
+
+    .body {
+        // margin-right: 1.30rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-between;
+
+        .navList {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            button {
+                padding: 0.5rem 0 0.5rem 3rem;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 0.75rem;
+                cursor: pointer;
+
+                img {}
+
+                div {}
+            }
+        }
+    }
+
+    .logout {
+        padding: 0 0 0 3rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.75rem;
+        color: #CF3636;
+        cursor: pointer;
+
+        img {}
+
+        div {}
+    }
+}

@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import { connectDB } from "./data/database.js";
 import userRouter from "./routes/user.js";
+import todoRouter from "./routes/todo.js";
 import cors from 'cors';
 import { errorMiddleware } from "./middleware/error.js";
 
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 
 //ROUTES
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/todo", todoRouter);
 
 // Error handling middleware
 // app.use((err, req, res, next) => {

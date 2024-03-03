@@ -1,0 +1,50 @@
+.introMessageContainer {
+    width: 55%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #17A2B8;
+
+    .body {
+        font-family: 'Open Sans', sans-serif;
+        color: #fff;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .object {
+            position: relative;
+
+            .darkCircle {
+                position: absolute;
+                z-index: 2;
+                top: 12%;
+                left: 15%;
+                width: 179px;
+                height: 179px;
+                border-radius: 52%;
+                background-color: #336f7879;
+            }
+
+            img {
+                position: relative;
+                z-index: 3;
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        .textContainer {
+            text-align: center;
+
+            h1 {
+                font-weight: 600;
+            }
+
+            p {
+                font-weight: 400;
+            }
+        }
+    }
+}
