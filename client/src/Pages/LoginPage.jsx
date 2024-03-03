@@ -36,7 +36,7 @@ const LoginPage = () => {
                 const { token } = response.data;
                 localStorage.setItem('token', token);
                 if (response?.data?.user) {
-                    setUserInStorage(response?.data?.user);
+                    localStorage.setItem('user', JSON.stringify(response?.data?.user));
                 }
                 navigate("/home/dashboard");
                 toast.success(response?.data?.message);

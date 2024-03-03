@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/CommonComponents.module.scss';
 import BgBlack from './BgBlack';
-import CloseOnOutsideClick from './CloseOnOutsideClick';
+import CloseOnOutsideClick from './CloseOnClick';
 
 const ChoiceModel = ({ message, firstBtnText, secondBtnText, onConfirm, onClose }) => {
     return (

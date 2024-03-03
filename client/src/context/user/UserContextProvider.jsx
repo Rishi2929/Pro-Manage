@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserContext from "./UserContext";
+import useUserLocalStorage from "../../hooks/useUserLocalStorage";
 
 const UserContextProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);

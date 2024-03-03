@@ -21,10 +21,10 @@ import Navbar from './components/Navbar';
 function MainLayout() {
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
-      <div  style={{ height: '100vh', width: '20%' }}>
+      <div style={{ height: '100vh', width: '15rem' }}>
         <Navbar />
       </div>
-      <div style={{ flex: 1, overflowY: 'auto', width: '80%', background: "lightpink" }}>
+      <div style={{ flex: 1, overflowY: 'auto', width: '85rem' }}>
         <Outlet />
       </div>
     </div>
@@ -33,18 +33,22 @@ function MainLayout() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/home" element={<MainLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="settings" element={<Setting />} />
-        </Route>
-        <Route path="/" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
-      <Toaster />
-    </Router>
+    <UserContextProvider>
+      <AllTodosContextProvider>
+        <Router>
+          <Routes>
+            <Route path="/home" element={<MainLayout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="settings" element={<Setting />} />
+            </Route>
+            <Route path="/" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+          <Toaster />
+        </Router>
+      </AllTodosContextProvider>
+    </UserContextProvider>
   );
 }
 
