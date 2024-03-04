@@ -29,14 +29,19 @@ export const createUpdateTask = async (req, res) => {
             }
         }
 
-        delete body?._id;
         body?.checklist?.forEach(task => {
-            task._id = new objId();
+            task._id = new objectId();
         });
 
         body.userId = userId;
+        let todo = {};
 
-        const todo = await Todo(body).save();
+        if(body?._id) {     //edit todo
+
+        } else {        // _id not exist means create todo
+            todo = await Todo(body).save();
+        }
+
 
         res.status(200).json({ success: true, message: "Data saved successfully", data: todo });
     } catch (error) {
@@ -47,13 +52,8 @@ export const createUpdateTask = async (req, res) => {
 
 export const getTodos = async (req, res) => {
     try {
-        // console.log("sad")
         const { user } = req;
-
-        // let userId = user?._id;
-
         const todo = await Todo.find({ userId: user._id }).lean();
-        // console.log("todo: ", todo)
 
         res.status(200).json({ success: true, message: "All Todos fetched successfully for you", data: todo });
     } catch (error) {

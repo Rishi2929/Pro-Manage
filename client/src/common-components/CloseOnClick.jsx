@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import styles from '../styles/CommonComponents.module.scss';
 
-const CloseOnOutsideClick = ({ children, onClose }) => {
+const CloseOnClick = ({ children, onClose }) => {
     const wrapperRef = useRef(null);
 
     function handleClickOutside(event) {
@@ -23,4 +23,4 @@ const CloseOnOutsideClick = ({ children, onClose }) => {
     return <div className={styles.closeOnOutsideClick} ref={wrapperRef}>{children}</div>;
 };
 
-export default CloseOnOutsideClick;
+export default CloseOnClick;

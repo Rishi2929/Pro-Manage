@@ -5,7 +5,7 @@ import { createUpdateTask, deleteTodo, getAnalytics, getTodoById, getTodos, stat
 const router = express.Router();
 
 //with middleware
-router.post('/todo', isAuthenticated, createUpdateTask);
+router.post('/saveTodo', isAuthenticated, createUpdateTask);
 router.get('/get-todos', isAuthenticated, getTodos);
 router.get('/get-analytics', isAuthenticated, getAnalytics);
 router.delete('/delete-todo/:id', isAuthenticated, deleteTodo);

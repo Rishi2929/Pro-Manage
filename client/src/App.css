@@ -18,12 +18,19 @@ body {
   overflow: hidden;
 }
 
-/* .navBold {
-  background: #4f8fda4a;
-  color: #000;
-  font-weight: 600;
+
+/* input[type=checkbox], input[type=checkbox]:checked {
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  -o-appearance:none;
 }
 
-.navNormal {
-  color: #707070;
+input[type=checkbox] {
+  border-radius: 0.25rem;
+  border: 1px solid #E2E2E2;
 } */
+
+input[type=checkbox]:checked {
+  /* background: #17A2B8; */
+  accent-color: #17A2B8;
+}

@@ -7,7 +7,7 @@ import { BiSolidChevronDownSquare } from "react-icons/bi";
 import { BiSolidChevronUpSquare } from "react-icons/bi";
 import toast from "react-hot-toast";
 // import Moment from 'react-moment';
-import "moment-timezone"
+// import "moment-timezone"
 
 import styles from '../styles/Card.module.scss';
 

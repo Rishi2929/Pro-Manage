@@ -6,6 +6,7 @@ import { LuPlus } from "react-icons/lu";
 import styles from '../styles/StatusSection.module.scss';
 import Card from './Card';
 import { useActionData } from 'react-router-dom';
+import Create from './Create';
 
 const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClickCallback, plusClickCallBac }) => {
     const [collapseSection, setCollapseSection] = useState({
@@ -15,8 +16,14 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
         done: [],
     });
 
+    const [isCreateTodoShowing, setIsCreateTodoShowing] = useState(false);
+
     const handleCollapseSection = (sectionType) => {
 
+    };
+
+    const handleClose = () => {
+        setIsCreateTodoShowing(false);
     };
 
     return (
@@ -25,7 +32,7 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
                 <h3>{title}</h3>
                 <div className={styles.headerEndContainer}>
                     {sectionType === "todo" &&
-                        < LuPlus />
+                        < LuPlus onClick={() => setIsCreateTodoShowing(true)} />
                     }
                     <VscCollapseAll />
                 </div>
@@ -33,12 +40,12 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
 
             <div className={styles.sectionBody}>
                 <div className={styles.scroll}>
-                    {allTodos?.map((t, index) => {
+                    {allTodos?.map((todo, index) => {
                         return (
-                            t.status.toLowerCase() === sectionType.toLowerCase() &&
+                            todo.status.toLowerCase() === sectionType.toLowerCase() &&
                             <div className={styles.cardOne} key={index}>
                                 <Card
-                                    todo={t}
+                                    todo={todo}
                                     handleCollapseSection={handleCollapseSection}
                                     collapseSection={collapseSection}
                                 />
@@ -47,6 +54,13 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
                     })}
                 </div>
             </div>
+
+            {
+                isCreateTodoShowing &&
+                <Create
+                    handleClose={handleClose}
+                />
+            }
 
         </div>
     );
