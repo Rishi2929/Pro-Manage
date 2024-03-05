@@ -56,25 +56,25 @@ import axios from 'axios';
 
 const AllTodosContextProvider = ({ children }) => {
   const [allTodos, setAllTodos] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("thisWeek");
   const [allTodosLoading, setAllTodosLoading] = useState(false);
 
   useEffect(() => {
     getAllTodos();
-  }, []);
+  }, [selectedFilter]);
 
   const getAllTodos = async () => {
     try {
       setAllTodosLoading(true);
       const token = JSON.parse(localStorage.getItem('token'));
-      const response = await axios.get(`${server}/todo/get-todos`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-        }
-      );
-      
+      const response = await axios.get(`${server}/todo/get-todos`, {
+        params: { filter: selectedFilter },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+      });
+
       setAllTodos(response?.data?.data);
     } catch (error) {
       console.error(error);
@@ -85,8 +85,9 @@ const AllTodosContextProvider = ({ children }) => {
 
   return (
     <AllTodosContext.Provider value={{
-      allTodos, setAllTodos, 
-      allTodosLoading, setAllTodosLoading
+      allTodos, setAllTodos,
+      allTodosLoading, setAllTodosLoading,
+      selectedFilter, setSelectedFilter
     }}>
       {children}
     </AllTodosContext.Provider>

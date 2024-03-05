@@ -17,6 +17,7 @@ import AllTodosContextProvider from './context/allTodosData/AllTodosContextProvi
 
 import './App.css';
 import Navbar from './components/Navbar';
+import SharePage from './pages/SharePage';
 
 function MainLayout() {
   return (
@@ -44,6 +45,7 @@ function App() {
             </Route>
             <Route path="/" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="sharePage/:id" element={<SharePage />} />
           </Routes>
           <Toaster />
         </Router>

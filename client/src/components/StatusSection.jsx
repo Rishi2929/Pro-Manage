@@ -9,18 +9,29 @@ import { useActionData } from 'react-router-dom';
 import Create from './Create';
 
 const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClickCallback, plusClickCallBac }) => {
-    const [collapseSection, setCollapseSection] = useState({
-        backlog: [],
-        todo: [],
-        progress: [],
-        done: [],
+    const [collapseSection, setCollapseSection] = useState({    // if drop down or drop up is clicked we push or remove that todo card ids according
+        BACKLOG: [],
+        TODO: [],
+        PROGRESS: [],
+        DONE: [],
     });
 
     const [isCreateTodoShowing, setIsCreateTodoShowing] = useState(false);
 
-    const handleCollapseSection = (sectionType) => {
-
+    const handleCollapseSection = (todo_id, clickType, sectionType) => {
+        if(clickType === "dropDownClick") {
+            setCollapseSection({...collapseSection, [sectionType]: [...collapseSection[sectionType], todo_id]})
+        }
+        else if(clickType === "dropUpClick") {
+            setCollapseSection({...collapseSection, [sectionType]: [...collapseSection[sectionType].filter(id => id !== todo_id)]})
+        }
     };
+
+    const handleSectionCollapseAll = (sectionType) => {
+        setCollapseSection({...collapseSection, [sectionType]: []}) // remove all ids for that section type
+    }
+
+    console.log("collapseSection: ", collapseSection)
 
     const handleClose = () => {
         setIsCreateTodoShowing(false);
@@ -31,10 +42,10 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
             <div className={styles.header}>
                 <h3>{title}</h3>
                 <div className={styles.headerEndContainer}>
-                    {sectionType === "todo" &&
+                    {sectionType === "TODO" &&
                         < LuPlus onClick={() => setIsCreateTodoShowing(true)} />
                     }
-                    <VscCollapseAll />
+                    <VscCollapseAll onClick={() => handleSectionCollapseAll(sectionType)} />
                 </div>
             </div>
 
@@ -42,12 +53,13 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
                 <div className={styles.scroll}>
                     {allTodos?.map((todo, index) => {
                         return (
-                            todo.status.toLowerCase() === sectionType.toLowerCase() &&
+                            todo?.status.toLowerCase() === sectionType.toLowerCase() &&
                             <div className={styles.cardOne} key={index}>
                                 <Card
                                     todo={todo}
                                     handleCollapseSection={handleCollapseSection}
                                     collapseSection={collapseSection}
+                                    sectionType = {sectionType}
                                 />
                             </div>
                         );

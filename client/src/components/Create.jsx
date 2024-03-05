@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import blueDotImg from '../assets/blueDot.png';
 import greenDotImg from '../assets/greenDot.png';
@@ -16,7 +16,8 @@ import toast from "react-hot-toast";
 import { v4 as uuid } from "uuid";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Moment from 'moment-timezone';
+// import Moment from 'moment-timezone';
+import moment from 'moment';
 import { server } from "../main";
 import axios from "axios";
 
@@ -78,9 +79,10 @@ const TaskField = ({ handleChange, isCompleted, description, handleDeleteTask, k
 
 const Create = ({ handleClose }) => {
     const [isCalendarShowing, setIsCalendarShowing] = useState(false);
+    const [checklistCompletedText, setChecklistCompletedText] = useState("");
 
     const [todo, setTodo] = useState({
-        status: "todo",
+        status: "TODO",
         checklist: [],
         priority: "",
         dueDate: "",
@@ -89,9 +91,20 @@ const Create = ({ handleClose }) => {
 
     const { allTodos, setAllTodos } = useContext(AllTodosContext);
 
+    useEffect(() => {
+        if (todo?.checklist?.length) {
+            const isCompletedTrueTodos = todo?.checklist?.filter(task => task?.isCompleted);
+            const isCompletedTrueTodosLength = isCompletedTrueTodos?.length;
+            setChecklistCompletedText(`${isCompletedTrueTodosLength}/${todo?.checklist?.length}`);
+        } else {
+            setChecklistCompletedText('0/0');
+        }
+    }, [todo?.checklist]);
+
 
     const getFormattedDate = (date) => {
-        const formattedDate = <Moment format="DD/MM/YYYY">{date}</Moment>;
+        // console.log("date: ", date);
+        const formattedDate = moment(date).format("DD/MM/YYYY");
         return formattedDate;
     };
 
@@ -119,7 +132,7 @@ const Create = ({ handleClose }) => {
             handleClose();
         } catch (err) {
             console.error(err);
-            toast.error("handleSubmit");
+            toast.error(err?.response?.data?.message);
         }
     };
 
@@ -196,7 +209,7 @@ const Create = ({ handleClose }) => {
                 <div className={styles.checklistWrapper}>
                     <div className={styles.tasksWrapper}>
                         <div className={styles.headingStarContainer}>
-                            <h2>Checklist</h2>
+                            <h2>Checklist ({checklistCompletedText ? (checklistCompletedText) : 0 / 0})</h2>
                             <span className={styles.star}>*</span>
                         </div>
                         <div className={styles.tasks}>
@@ -223,7 +236,6 @@ const Create = ({ handleClose }) => {
 
                 <div className={styles.endContainer}>
                     <button className={styles.date} onClick={() => setIsCalendarShowing(true)}>
-                        {todo.dueDate ? <Moment format="DD/MM/YYYY">{todo.dueDate}</Moment> : "Select Due Date"}
                         {todo.dueDate ? getFormattedDate(todo?.dueDate) : "Select Due Date"}
                     </button>
                     <div className={styles.actionContainer}>
