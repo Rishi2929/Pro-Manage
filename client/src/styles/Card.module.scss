@@ -47,6 +47,10 @@
                 cursor: pointer;
             }
 
+            span:last-child {
+                color: #CF3636;
+            }
+
             .toastContainer {
                 position: fixed;
                 top: 20px;

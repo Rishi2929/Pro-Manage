@@ -12,6 +12,8 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         .object {
             position: relative;
@@ -20,7 +22,7 @@
                 position: absolute;
                 z-index: 2;
                 top: 12%;
-                left: 15%;
+                left: 21%;
                 width: 179px;
                 height: 179px;
                 border-radius: 52%;

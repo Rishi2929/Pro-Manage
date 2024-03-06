@@ -80,7 +80,7 @@ const TaskField = ({ handleChange, isCompleted, description, handleDeleteTask, k
 
 const Edit = ({ handleClose, todoId }) => {
     const [isCalendarShowing, setIsCalendarShowing] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [checklistCompletedText, setChecklistCompletedText] = useState("");
 
     const [todo, setTodo] = useState({

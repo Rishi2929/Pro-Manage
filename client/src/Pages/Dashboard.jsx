@@ -8,6 +8,7 @@ import StatusSection from '../components/StatusSection';
 import UserContext from '../context/user/UserContext';
 import useUserLocalStorage from '../hooks/useUserLocalStorage';
 import CustomLoader from '../common-components/CustomLoader';
+import CloseOnClick from '../common-components/CloseOnClick';
 
 const Dashboard = () => {
     const [isFilterPopupShowing, setIsFilterPopupShowing] = useState(false);
@@ -42,15 +43,17 @@ const Dashboard = () => {
                         <h3>12th Jan, 2024</h3>
                         <div className={styles.titleFilterContainer}>
                             <h1>Board</h1>
-                            <div className={styles.filterContainer} onClick={() => setIsFilterPopupShowing(prev => !prev)}>
-                                {selectedFilter === "thisWeek" ?
-                                    <span>This week</span> :
-                                    selectedFilter === "thisMonth" ?
-                                        <span>This month</span> :
-                                        <span>This day</span>
-                                }
-                                <MdKeyboardArrowDown />
-                            </div>
+                            <CloseOnClick onClose={() => setIsFilterPopupShowing(false)} >
+                                <div className={styles.filterContainer} onClick={() => setIsFilterPopupShowing(prev => !prev)}>
+                                    {selectedFilter === "thisWeek" ?
+                                        <span>This week</span> :
+                                        selectedFilter === "thisMonth" ?
+                                            <span>This month</span> :
+                                            <span>This day</span>
+                                    }
+                                    <MdKeyboardArrowDown />
+                                </div>
+                            </CloseOnClick>
                             {
                                 isFilterPopupShowing &&
                                 <div className={styles.smallPopup}>
