@@ -23,6 +23,7 @@ const LoginPage = () => {
     const [userInStorage, setUserInStorage] = useUserLocalStorage();
     const navigate = useNavigate();
     const [isPasswordShowing, setIsPasswordShowing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const initialValues = {
         email: '',
@@ -34,6 +35,7 @@ const LoginPage = () => {
         validationSchema,
         onSubmit: async (values) => {
             try {
+                setIsLoading(true);
                 const { email, password } = values;
                 const response = await axios.post(
                     `${server}/users/login`, { email, password }
@@ -48,6 +50,8 @@ const LoginPage = () => {
                 toast.success(response?.data?.message);
             } catch (error) {
                 toast.error(error?.response?.data?.message);
+            } finally {
+                setIsLoading(false);
             }
         },
     });
@@ -92,8 +96,8 @@ const LoginPage = () => {
                     </div>
 
 
-                    <button type="submit" className={styles["btn1"]}>
-                        Sign in
+                    <button type="submit" className={styles["btn1"]} disabled={isLoading}>
+                        {isLoading ? "Loading..." : "Login"}
                     </button>
 
                     <p>Don't have an account yet?</p>

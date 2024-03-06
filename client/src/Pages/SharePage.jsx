@@ -25,6 +25,7 @@ import CloseOnClick from "../common-components/CloseOnClick";
 import BgBlack from "../common-components/BgBlack";
 import Edit from "../components/Edit";
 import { useParams } from "react-router-dom";
+import CustomLoader from "../common-components/CustomLoader";
 
 
 const DotPriorityContainer = ({ imgSrc, text }) => {
@@ -181,69 +182,71 @@ const SharePage = ({ handleCollapseSection, collapseSection, sectionType, setOpe
 
     return (
         <>
-            <div className={styles.cardContainer}>
-                <div className={styles.upperCard}>
-                    <img src={logoImg} alt="Logo img" />
-                    <h1>Pro Manage</h1>
-                </div>
-                <div className={styles.todoSection}>
-                    <div className={styles.todoSectionContainer}>
-                        <div className={styles.priorityDot}>
-                            {todo?.priority === "low" ?
-                                <>
-                                    <img src={GreenDotImg} alt="green dot" />
-                                    <span>LOW PRIORITY</span>
-                                </> :
-                                todo?.priority === "moderate" ?
+            {isLoading ? <CustomLoader /> :
+                <div className={styles.cardContainer}>
+                    <div className={styles.upperCard}>
+                        <img src={logoImg} alt="Logo img" />
+                        <h1>Pro Manage</h1>
+                    </div>
+                    <div className={styles.todoSection}>
+                        <div className={styles.todoSectionContainer}>
+                            <div className={styles.priorityDot}>
+                                {todo?.priority === "low" ?
                                     <>
-                                        <img src={BlueDotImg} alt="blue dot" />
-                                        <span>MODERATE PRIORITY</span>
+                                        <img src={GreenDotImg} alt="green dot" />
+                                        <span>LOW PRIORITY</span>
                                     </> :
-                                    <>
-                                        <img src={PinkDotImg} alt="high dot" />
-                                        <span>HIGH PRIORITY</span>
-                                    </>
-                            }
-                        </div>
-
-
-                        <h1>{todo?.title}</h1>
-
-                        <div className={styles.checklistSection}>
-                            <div className={styles.checklistUp}>
-                            <h4>Checklist({checklistCompletedText ? (checklistCompletedText) : (0 / 0)})</h4>
+                                    todo?.priority === "moderate" ?
+                                        <>
+                                            <img src={BlueDotImg} alt="blue dot" />
+                                            <span>MODERATE PRIORITY</span>
+                                        </> :
+                                        <>
+                                            <img src={PinkDotImg} alt="high dot" />
+                                            <span>HIGH PRIORITY</span>
+                                        </>
+                                }
                             </div>
 
-                            <div className={styles.tasks}>
-                                {todo?.checklist?.map((task, index) => {
-                                    return (
-                                        <div className={styles.task} key={index}>
-                                            <div className={styles.checkboxInputWrapper}>
-                                                <input
-                                                    name="isCompleted"
-                                                    type="checkbox"
-                                                    checked={task?.isCompleted}
-                                                    className={styles.checkbox}
-                                                />
-                                                <p className={styles.inp}>{task?.description}</p>
+
+                            <h1>{todo?.title}</h1>
+
+                            <div className={styles.checklistSection}>
+                                <div className={styles.checklistUp}>
+                                    <h4>Checklist({checklistCompletedText ? (checklistCompletedText) : (0 / 0)})</h4>
+                                </div>
+
+                                <div className={styles.tasks}>
+                                    {todo?.checklist?.map((task, index) => {
+                                        return (
+                                            <div className={styles.task} key={index}>
+                                                <div className={styles.checkboxInputWrapper}>
+                                                    <input
+                                                        name="isCompleted"
+                                                        type="checkbox"
+                                                        checked={task?.isCompleted}
+                                                        className={styles.checkbox}
+                                                    />
+                                                    <p className={styles.inp}>{task?.description}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>
                             </div>
+
+                            {
+                                todo?.dueDate &&
+                                <div className={styles.down}>
+                                    <span>Due Date</span>
+                                    <button className={`${styles.date} ${styles.dateBg}`}>{moment(todo?.dueDate).format("MMM Do")}</button>
+                                </div>
+                            }
+
                         </div>
-
-                        {
-                            todo?.dueDate &&
-                            <div className={styles.down}>
-                                <span>Due Date</span>
-                                <button className={`${styles.date} ${styles.dateBg}`}>{moment(todo?.dueDate).format("MMM Do")}</button>
-                            </div>
-                        }
-
                     </div>
                 </div>
-            </div>
+            }
         </>
     );
 };
