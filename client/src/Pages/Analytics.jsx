@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { server } from '../main';
 import axios from 'axios';
-import styles from '../styles/Analytic.module.scss';;
+import styles from '../styles/Analytic.module.scss'; 
+import CustomLoader from '../common-components/CustomLoader';
+
 
 const AnalyticRow = ({ title, value }) => {
   return (
@@ -17,6 +19,7 @@ const AnalyticRow = ({ title, value }) => {
 
 const Analytics = () => {
   const [analytic, setAnalytic] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchAnalyticsData();
@@ -24,6 +27,7 @@ const Analytics = () => {
 
   const fetchAnalyticsData = async () => {
     try {
+      setIsLoading(true);
       const token = JSON.parse(localStorage.getItem('token'));
       const response = await axios.get(`${server}/todo/get-analytics`,
         {
@@ -41,6 +45,8 @@ const Analytics = () => {
       setAnalytic(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,28 +107,30 @@ const Analytics = () => {
 
   return (
     <div className={styles.analyticsContainer}>
-      <div className={styles.right}>
-        <div className={styles.title}>Analytics</div>
-        <div className={styles.dataWrapper}>
-          <div className={styles.box}>
-            <div className={styles.box2}>
-              <AnalyticRow title="Backlog Tasks" value={analytic?.backlog} />
-              <AnalyticRow title="To-do Tasks" value={analytic?.todo} />
-              <AnalyticRow title="In-Progress Tasks" value={analytic?.progress} />
-              <AnalyticRow title="Completed Tasks" value={analytic?.completed} />
+      {isLoading ? <CustomLoader isLoading={isLoading} /> :
+        <div className={styles.right}>
+          <div className={styles.title}>Analytics</div>
+          <div className={styles.dataWrapper}>
+            <div className={styles.box}>
+              <div className={styles.box2}>
+                <AnalyticRow title="Backlog Tasks" value={analytic?.backlog} />
+                <AnalyticRow title="To-do Tasks" value={analytic?.todo} />
+                <AnalyticRow title="In-Progress Tasks" value={analytic?.progress} />
+                <AnalyticRow title="Completed Tasks" value={analytic?.completed} />
+              </div>
             </div>
-          </div>
-          <div className={styles.box}>
-            <div className={styles.box2}>
-              <AnalyticRow title="Low Priority" value={analytic?.low} />
-              <AnalyticRow title="Moderate Priority" value={analytic?.moderate} />
-              <AnalyticRow title="High Priority" value={analytic?.high} />
-              <AnalyticRow title="Due Date Tasks" value={analytic?.dueDate} />
+            <div className={styles.box}>
+              <div className={styles.box2}>
+                <AnalyticRow title="Low Priority" value={analytic?.low} />
+                <AnalyticRow title="Moderate Priority" value={analytic?.moderate} />
+                <AnalyticRow title="High Priority" value={analytic?.high} />
+                <AnalyticRow title="Due Date Tasks" value={analytic?.dueDate} />
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
+      }
     </div>
   );
 };

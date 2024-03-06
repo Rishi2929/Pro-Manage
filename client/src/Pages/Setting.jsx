@@ -93,7 +93,7 @@ const Setting = () => {
           <img src={eyeImg} alt="Eye" className={styles.eyeImg} onClick={() => handleShowPassword("new-password")} />
         </div>
 
-        {isLoading ? <CustomLoader isLoading={isLoading} /> : <button className={styles.updateBtn} disabled={isLoading} onClick={updatePassword}>"UPDATE"</button>}
+        {isLoading ? <CustomLoader isLoading={isLoading} /> : <button className={styles.updateBtn} disabled={isLoading} onClick={updatePassword}>UPDATE</button>}
       </div>
     </div>
   );
