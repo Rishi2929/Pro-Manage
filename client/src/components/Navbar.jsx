@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  console.log("currentTab: ", currentTab);
+  // console.log("currentTab: ", currentTab);
 
   const handleLogoutClick = () => {
     localStorage.removeItem("token");

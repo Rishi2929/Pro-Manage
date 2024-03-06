@@ -9,7 +9,7 @@ const useUserLocalStorage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("userInStorage: ", userInStorage)
+    // console.log("userInStorage: ", userInStorage)
     localStorage.setItem("user", JSON.stringify(userInStorage));
   }, [userInStorage]);
 

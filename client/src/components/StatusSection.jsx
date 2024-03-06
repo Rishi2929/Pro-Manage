@@ -31,8 +31,6 @@ const StatusSection = ({ sectionType, allTodos, setAllTodos, title, collapseClic
         setCollapseSection({...collapseSection, [sectionType]: []}) // remove all ids for that section type
     }
 
-    console.log("collapseSection: ", collapseSection)
-
     const handleClose = () => {
         setIsCreateTodoShowing(false);
     };

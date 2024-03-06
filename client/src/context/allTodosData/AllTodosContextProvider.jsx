@@ -66,10 +66,10 @@ const AllTodosContextProvider = ({ children }) => {
     getAllTodos(selectedFilter);
   }, [selectedFilter]);
 
-  useEffect(() => {
-    console.log("allllllllllllllllllllllllll: ", param)
+  // useEffect(() => {
+    // console.log("allllllllllllllllllllllllll: ", param)
     // getAllTodos(selectedFilter);
-  }, []);
+  // }, []);
 
 
   const getAllTodos = async (selectedFilter = "thisWeek") => {
