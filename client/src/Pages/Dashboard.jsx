@@ -50,7 +50,7 @@ const Dashboard = () => {
                         <h3>12th Jan, 2024</h3>
                         <div className={styles.titleFilterContainer}>
                             <h1>Board</h1>
-                            <CloseOnClick onClose={() => setIsFilterPopupShowing(false)} >
+                            {/* <CloseOnClick onClose={() => setIsFilterPopupShowing(false)} > */}
                                 <div className={styles.filterContainer} onClick={() => setIsFilterPopupShowing(prev => !prev)}>
                                     {selectedFilter === "thisWeek" ?
                                         <span>This week</span> :
@@ -60,7 +60,7 @@ const Dashboard = () => {
                                     }
                                     <MdKeyboardArrowDown />
                                 </div>
-                            </CloseOnClick>
+                            {/* </CloseOnClick> */}
                             {
                                 isFilterPopupShowing &&
                                 <div className={styles.smallPopup}>
