@@ -10,10 +10,15 @@ import useUserLocalStorage from '../hooks/useUserLocalStorage';
 import CustomLoader from '../common-components/CustomLoader';
 import CloseOnClick from '../common-components/CloseOnClick';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 const Dashboard = () => {
     const [isFilterPopupShowing, setIsFilterPopupShowing] = useState(false);
     const [user, setUser] = useState(null);
+
+    const currentDate = moment();
+
+    const formattedDate = currentDate.format("Do MMM, YYYY");
 
     const { allTodos, setAllTodos, selectedFilter, setSelectedFilter, allTodosLoading, getAllTodos } = useContext(AllTodosContext);
 
@@ -29,8 +34,8 @@ const Dashboard = () => {
 
     const getUserFromLocal = () => {
         const user = JSON.parse(localStorage.getItem("user")) || null;
-        console.log("userrrrrrrrrrrrrrrrrr: ", user)
-        if(user === null) {
+        console.log("userrrrrrrrrrrrrrrrrr: ", user);
+        if (user === null) {
             navigate('/login');
         }
         setUser(user);
@@ -47,19 +52,19 @@ const Dashboard = () => {
                 <>
                     <div className={styles.header}>
                         <h2>Welcome! {user?.name}</h2>
-                        <h3>12th Jan, 2024</h3>
+                        <h3>{formattedDate}</h3>
                         <div className={styles.titleFilterContainer}>
                             <h1>Board</h1>
                             {/* <CloseOnClick onClose={() => setIsFilterPopupShowing(false)} > */}
-                                <div className={styles.filterContainer} onClick={() => setIsFilterPopupShowing(prev => !prev)}>
-                                    {selectedFilter === "thisWeek" ?
-                                        <span>This week</span> :
-                                        selectedFilter === "thisMonth" ?
-                                            <span>This month</span> :
-                                            <span>This day</span>
-                                    }
-                                    <MdKeyboardArrowDown />
-                                </div>
+                            <div className={styles.filterContainer} onClick={() => setIsFilterPopupShowing(prev => !prev)}>
+                                {selectedFilter === "thisWeek" ?
+                                    <span>This week</span> :
+                                    selectedFilter === "thisMonth" ?
+                                        <span>This month</span> :
+                                        <span>This day</span>
+                                }
+                                <MdKeyboardArrowDown />
+                            </div>
                             {/* </CloseOnClick> */}
                             {
                                 isFilterPopupShowing &&
