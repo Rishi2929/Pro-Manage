@@ -12,6 +12,7 @@ import lockImg from '../assets/lock.png';
 import mailImg from '../assets/mailLogo.png';
 import userImg from '../assets/user.png';
 import eyeImg from '../assets/eye.png';
+import CustomLoader from "../common-components/CustomLoader";
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
@@ -24,7 +25,7 @@ const validationSchema = Yup.object({
 
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState({
+  const [isPasswordShowing, setIsPasswordShowing] = useState({
     password: false,
     confirmPassword: false
   });
@@ -43,19 +44,31 @@ const RegisterPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true);
         const { name, email, password } = values;
         const response = await axios.post(
           `${server}/users/new`, { name, email, password }
         );
         console.log("registerPage response: ", response);
         navigate('/login');
-        toast.success("User Registered Successfully");
+        toast.success("You are Registered Successfully");
       } catch (error) {
         console.error(error);
         toast.error(error.response.data.message);
       }
+      finally {
+        setIsLoading(false);
+      }
     },
   });
+
+  const passwordShowOrNot = (fieldName) => {
+    if (fieldName === "password") {
+      setIsPasswordShowing((prevShowPassword) => ({ ...prevShowPassword, password: !prevShowPassword.password }));
+    } else if (fieldName === "confirmPassword") {
+      setIsPasswordShowing((prevShowPassword) => ({ ...prevShowPassword, confirmPassword: !prevShowPassword.confirmPassword }));
+    }
+  };
 
   return (
     <div className={styles.parent_cont}>
@@ -66,7 +79,7 @@ const RegisterPage = () => {
         <form onSubmit={formik.handleSubmit} className={styles["input-cont"]}>
           <div className={styles["input-fields"]}>
             <div className={styles.allCont}>
-              <img />
+              <img src={userImg} alt="user img" />
               <input
                 type="text"
                 id="name"
@@ -81,7 +94,7 @@ const RegisterPage = () => {
 
           <div className={styles["input-fields"]}>
             <div className={styles.allCont}>
-              <img />
+              <img src={mailImg} alt="mail img" />
               <input
                 type="email"
                 id="email"
@@ -97,17 +110,16 @@ const RegisterPage = () => {
 
           <div className={styles["input-fields"]}>
             <div className={styles.allCont}>
-
-              <img />
+              <img src={lockImg} alt="lock img" />
               <input
-                type="password"
+                type={isPasswordShowing.password ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="Password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
-              <img />
+              <img src={eyeImg} onClick={() => passwordShowOrNot("password")} className={styles.eyeImg} alt="eye img" />
             </div>
 
             {formik.errors.password && <div className={styles["error-message"]}>{formik.errors.password}</div>}
@@ -115,29 +127,30 @@ const RegisterPage = () => {
 
           <div className={styles["input-fields"]}>
             <div className={styles.allCont}>
-
-              <img />
+              <img src={lockImg} alt="lock img" />
               <input
-                type="password"
+                type={isPasswordShowing.confirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 name="confirmPassword"
                 placeholder="Confirm Password"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
               />
-              <img />
+              <img src={eyeImg} onClick={() => passwordShowOrNot("confirmPassword")} className={styles.eyeImg} alt="eye img" />
             </div>
 
             {formik.errors.confirmPassword && <div className={styles["error-message"]}>{formik.errors.confirmPassword}</div>}
           </div>
+          <div className={styles.bottomContainer}>
 
-          <button type="submit" className={styles["btn1"]}>
-            Sign up
-          </button>
+            <button type="submit" className={styles["btn1"]} disabled={isLoading}>
+              {isLoading ? "Loading..." : "Register"}
+            </button>
 
-          <p>Have an Account?</p>
-          <Link to='/login'>Log In</Link>
 
+            <p>Have an Account?</p>
+            <Link to='/login'>Log In</Link>
+          </div>
         </form>
       </div>
     </div>

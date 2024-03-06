@@ -13,13 +13,14 @@ const Dashboard = () => {
     const [isFilterPopupShowing, setIsFilterPopupShowing] = useState(false);
     const [user, setUser] = useState(null);
 
-    const { allTodos, setAllTodos, selectedFilter, setSelectedFilter, allTodosLoading } = useContext(AllTodosContext);
+    const { allTodos, setAllTodos, selectedFilter, setSelectedFilter, allTodosLoading, getAllTodos } = useContext(AllTodosContext);
 
     console.log("user: ", user);
 
     useEffect(() => {
-        // console.log("dashboard mounted");
+        console.log("dashboardddddddddddddddddd mounted");
         getUserFromLocal();
+        getAllTodos();
     }, []);
 
     const getUserFromLocal = () => {

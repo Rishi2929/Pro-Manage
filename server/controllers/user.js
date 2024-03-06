@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log("login req.body: ", req.body);
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) return res.status(400).json({
@@ -27,6 +28,59 @@ export const login = async (req, res, next) => {
     console.log(User.name)
 
     res.status(201).json({success: true, message: 'Logged In', token, user: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updatePassword = async (req, res, next) => {
+  try {
+    const { name, email, password, oldPassword, newPassword } = req.body;
+    console.log("req.body: ", req.body);
+
+    if (!password || !oldPassword.trim() || !newPassword.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Some Fields can't be empty",
+      });
+    }
+
+    let user = await User.findOne({ email }).select("+password");;
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid data",
+      });
+    }
+
+    console.log("user db: ", user);
+
+    const sameOrNot = await bcrypt.compare(oldPassword, user.password);
+    if (!sameOrNot) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect old password",
+      });
+    }
+
+    if (newPassword.trim() == oldPassword.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Old password is equal to new password",
+      });
+    }
+
+    const protectedPassword = await bcrypt.hash(newPassword, 10);
+
+    if (newPassword.trim() !== oldPassword.trim()) {
+      user = await User.updateOne({ email }, { $set: { name: name, password: protectedPassword } });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Password Updated Successfully",
+      user
+    });
   } catch (error) {
     next(error);
   }

@@ -57,32 +57,37 @@ export const getTodos = async (req, res) => {
         console.log("req.query: ", req.query);
         let query = { userId: user._id };
 
+        let currentDate = new Date();
+
         switch (req?.query?.filter) {
             case 'thisWeek':
                 query.createdAt = {
-                    $gte: moment().startOf('week').toDate(),
-                    $lte: moment().endOf('week').toDate()
+                    // $gte: moment().startOf('week').toDate(),
+                    $gte: new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+                    $lte: new Date()
                 };
                 break;
-            case 'thisDay':
+            case 'today':
                 query.createdAt = {
-                    $gte: moment().startOf('day').toDate(),
-                    $lte: moment().endOf('day').toDate()
+                    $gte: new Date(currentDate.getTime() - 24 * 60 * 60 * 1000),
+                    $lte: new Date()
                 };
                 break;
             case 'thisMonth':
                 query.createdAt = {
-                    $gte: moment().startOf('month').toDate(),
-                    $lte: moment().endOf('month').toDate()
+                    $gte: new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000),
+                    $lte: new Date()
                 };
                 break;
             default:
                 break;
         }
+        
         console.log("getTodos query: ", query);
+
         const todo = await Todo.find(query).lean();
 
-        res.status(200).json({ success: true, message: "All Todos fetched successfully for you", data: todo });
+        res.status(200).json({ success: true, message: "Todos are fetched successfully", data: todo });
     } catch (error) {
         console.log("getTodos: ", error);
         res.status(400).json({ success: false, message: "Something Went Wrong" });
@@ -164,7 +169,7 @@ export const getAnalytics = async (req, res) => {
         if (user)
             todo = await Todo.find({ userId: user._id }, { checklist: 0 }).lean();
 
-        res.status(200).json({ success: true, message: "All Todos fetched successfully for you", data: todo });
+        res.status(200).json({ success: true, message: "Data successfully fetched", data: todo });
     } catch (error) {
         console.log("getTodos: ", error);
         res.status(400).json({ success: false, message: "Something Went Wrong" });

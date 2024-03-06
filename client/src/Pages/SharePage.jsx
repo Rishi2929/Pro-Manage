@@ -196,7 +196,7 @@ const SharePage = ({ handleCollapseSection, collapseSection, sectionType, setOpe
                                 </> :
                                 todo?.priority === "moderate" ?
                                     <>
-                                        <img src={BlueDotImgue} alt="blue dot" />
+                                        <img src={BlueDotImg} alt="blue dot" />
                                         <span>MODERATE PRIORITY</span>
                                     </> :
                                     <>

@@ -9,6 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 import IntroMessage from "../components/IntroMessage";
 import useUserLocalStorage from "../hooks/useUserLocalStorage";
 
+import lockImg from '../assets/lock.png';
+import mailImg from '../assets/mailLogo.png';
+import userImg from '../assets/user.png';
+import eyeImg from '../assets/eye.png';
+
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -17,6 +22,7 @@ const validationSchema = Yup.object({
 const LoginPage = () => {
     const [userInStorage, setUserInStorage] = useUserLocalStorage();
     const navigate = useNavigate();
+    const [isPasswordShowing, setIsPasswordShowing] = useState(false);
 
     const initialValues = {
         email: '',
@@ -55,32 +61,33 @@ const LoginPage = () => {
                 <form onSubmit={formik.handleSubmit} className={styles["input-cont"]}>
 
                     <div className={styles["input-fields"]}>
-                        <div className={styles["label-cont"]}>
-
+                        <div className={styles.allCont}>
+                            <img src={userImg} alt="user img" />
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Email"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                            />
                         </div>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                        />
                         {formik.errors.email && <div className={styles["error-message"]}>{formik.errors.email}</div>}
                     </div>
 
                     <div className={styles["input-fields"]}>
-                        <div className={styles["label-cont"]}>
-
+                        <div className={styles.allCont}>
+                            <img src={mailImg} alt="mail img" />
+                            <input
+                                type={isPasswordShowing ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                placeholder="Password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                            />
+                            <img src={eyeImg} onClick={() => setIsPasswordShowing(!isPasswordShowing)} className={styles.eyeImg} alt="eye img" />
                         </div>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Password"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                        />
                         {formik.errors.password && <div className={styles["error-message"]}>{formik.errors.password}</div>}
                     </div>
 

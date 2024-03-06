@@ -1,0 +1,56 @@
+.settingContainer {
+    width: 100%;
+    height: 100vh;
+
+    .settingWrapper {
+        padding: 1rem 0 0 2rem;
+
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            // padding-top: 2rem;
+            padding-bottom: 2rem;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #D0D0D0;
+            border-radius: 7px;
+            padding: 5px;
+            margin-bottom: 20px;
+            width: 22rem;
+
+            .startImg {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+
+            .input {
+                flex: 1;
+                padding: 5px;
+                border: none;
+                outline: none;
+            }
+
+            .eyeImg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .updateBtn {
+            background-color: #17A2B8;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 350px;
+        }
+    }
+}

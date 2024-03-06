@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AllTodosContext from "./AllTodosContext";
 import { server } from '../../main';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 // const data = [
 //   {
@@ -59,11 +60,19 @@ const AllTodosContextProvider = ({ children }) => {
   const [selectedFilter, setSelectedFilter] = useState("thisWeek");
   const [allTodosLoading, setAllTodosLoading] = useState(false);
 
+  const param = useParams();
+
   useEffect(() => {
-    getAllTodos();
+    getAllTodos(selectedFilter);
   }, [selectedFilter]);
 
-  const getAllTodos = async () => {
+  useEffect(() => {
+    console.log("allllllllllllllllllllllllll: ", param)
+    // getAllTodos(selectedFilter);
+  }, []);
+
+
+  const getAllTodos = async (selectedFilter = "thisWeek") => {
     try {
       setAllTodosLoading(true);
       const token = JSON.parse(localStorage.getItem('token'));
@@ -87,7 +96,8 @@ const AllTodosContextProvider = ({ children }) => {
     <AllTodosContext.Provider value={{
       allTodos, setAllTodos,
       allTodosLoading, setAllTodosLoading,
-      selectedFilter, setSelectedFilter
+      selectedFilter, setSelectedFilter,
+      getAllTodos
     }}>
       {children}
     </AllTodosContext.Provider>
