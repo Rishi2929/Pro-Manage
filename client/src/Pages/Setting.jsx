@@ -37,7 +37,7 @@ const Setting = () => {
 
       if (response.data.success) {
         localStorage.removeItem("token");
-        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("user");
         toast.success("Logged out!");
         navigate('/');
       }

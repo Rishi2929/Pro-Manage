@@ -46,6 +46,7 @@ function App() {
             <Route path="/" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="sharePage/:id" element={<SharePage />} />
+            <Route path="*" element={<LoginPage />} />
           </Routes>
           <Toaster />
         </Router>

@@ -9,6 +9,7 @@ import UserContext from '../context/user/UserContext';
 import useUserLocalStorage from '../hooks/useUserLocalStorage';
 import CustomLoader from '../common-components/CustomLoader';
 import CloseOnClick from '../common-components/CloseOnClick';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const [isFilterPopupShowing, setIsFilterPopupShowing] = useState(false);
@@ -16,16 +17,22 @@ const Dashboard = () => {
 
     const { allTodos, setAllTodos, selectedFilter, setSelectedFilter, allTodosLoading, getAllTodos } = useContext(AllTodosContext);
 
+    const navigate = useNavigate();
+
     console.log("user: ", user);
 
     useEffect(() => {
-        console.log("dashboardddddddddddddddddd mounted");
+        // console.log("dashboardddddddddddddddddd mounted");
         getUserFromLocal();
         getAllTodos();
     }, []);
 
     const getUserFromLocal = () => {
         const user = JSON.parse(localStorage.getItem("user")) || null;
+        console.log("userrrrrrrrrrrrrrrrrr: ", user)
+        if(user === null) {
+            navigate('/login');
+        }
         setUser(user);
     };
 

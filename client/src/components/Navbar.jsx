@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("user");
     localStorage.removeItem("allTodos");
 
     toast.success("Logged out!");
