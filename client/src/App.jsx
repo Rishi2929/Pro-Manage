@@ -6,18 +6,18 @@ import { BrowserRouter as Router, Route, Routes, Outlet, Navigate } from 'react-
 
 import { Toaster } from 'react-hot-toast';
 
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
-import Setting from './pages/Setting';
+import RegisterPage from './Pages/RegisterPage';
+import LoginPage from './Pages/LoginPage';
+import Dashboard from './Pages/Dashboard';
+import Analytics from './Pages/Analytics';
+import Setting from './Pages/Setting';
 
 import UserContextProvider from './context/user/UserContextProvider';
 import AllTodosContextProvider from './context/allTodosData/AllTodosContextProvider';
 
 import './App.css';
 import Navbar from './components/Navbar';
-import SharePage from './pages/SharePage';
+import SharePage from './Pages/SharePage';
 
 function MainLayout() {
   return (
